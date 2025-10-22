@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: bounce 1s ease-in-out infinite alternate;
+            margin-bottom: 2rem;
+        }
+
+        .cake {
+            width: 200px;
+            height: 250px;
+            margin: 0 auto;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .cake-layer {
+            width: 180px;
+            height: 60px;
+            background: linear-gradient(to bottom, #ff9a9e 0%, #fad0c4 100%);
+            border-radius: 10px;
+            position: absolute;
+            left: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .layer1 { bottom: 0; }
+        .layer2 { bottom: 60px; width: 160px; left: 20px; background: linear-gradient(to bottom, #a18cd1 0%, #fbc2eb 100%); }
+        .layer3 { bottom: 120px; width: 140px; left: 30px; background: linear-gradient(to bottom, #ffecd2 0%, #fcb69f 100%); }
+
+        .candle {
+            width: 8px;
+            height: 40px;
+            background: linear-gradient(to bottom, #fff 0%, #ffe5e5 100%);
+            position: absolute;
+            bottom: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 4px 4px 0 0;
+        }
+
+        .flame {
+            width: 16px;
+            height: 24px;
+            background: radial-gradient(circle, #ffeb3b 0%, #ff9800 50%, transparent 70%);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 0.3s ease-in-out infinite alternate;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-20px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 0.8; }
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .message {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: floatUp 6s ease-in infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(180deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Happy Birthday! 🎉</h1>
+        <div class="cake">
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+            <div class="cake-layer layer3"></div>
+            <div class="cake-layer layer2"></div>
+            <div class="cake-layer layer1"></div>
+        </div>
+        <p class="message">Wishing you a wonderful day filled with joy!</p>
+    </div>
+
+    <script>
+        // Create confetti
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#a29bfe', '#fd79a8', '#fdcb6e'];
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            confetti.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 5000);
+        }
+
+        // Create balloons
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.left = Math.random() * 100 + '%';
+            balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            balloon.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            balloon.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(balloon);
+            
+            setTimeout(() => balloon.remove(), 8000);
+        }
+
+        // Generate confetti continuously
+        setInterval(createConfetti, 200);
+        
+        // Generate balloons occasionally
+        setInterval(createBalloon, 1500);
+    </script>
+</body>
+</html>
